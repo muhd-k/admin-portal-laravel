@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SupportTicketController;
+use App\Http\Controllers\DisputeController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,6 +29,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/tickets/{id}/status', [SupportTicketController::class, 'updateStatus'])->name('tickets.updateStatus');
         Route::post('/tickets/{id}/priority', [SupportTicketController::class, 'updatePriority'])->name('tickets.updatePriority');
         Route::post('/tickets/{id}/reply', [SupportTicketController::class, 'reply'])->name('tickets.reply');
+        
+        // Disputes
+        Route::get('/disputes', [DisputeController::class, 'index'])->name('disputes.index');
+        Route::get('/disputes/{id}', [DisputeController::class, 'show'])->name('disputes.show');
+        Route::post('/disputes/{id}/resolve', [DisputeController::class, 'resolve'])->name('disputes.resolve');
         
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
     });

@@ -34,4 +34,9 @@ class Dispute extends Model
     {
         return $this->belongsTo(Admin::class, 'resolved_by');
     }
+
+    public function evidence()
+    {
+        return $this->hasMany(DisputeEvidence::class);
+    }
 }
