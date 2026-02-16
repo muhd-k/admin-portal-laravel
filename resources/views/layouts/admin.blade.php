@@ -30,7 +30,7 @@
     </style>
 </head>
 <body class="h-full font-sans antialiased text-gray-100 bg-dark-lighter">
-    <div x-data="{ sidebarOpen: false }" class="min-h-screen flex flex-col md:flex-row">
+    <div x-data="{ sidebarOpen: false }" class="h-screen overflow-hidden flex flex-col md:flex-row">
         
         <!-- Mobile Header -->
         <div class="md:hidden flex items-center justify-between bg-dark-lighter p-4">
@@ -50,7 +50,7 @@
 
             <nav class="flex-1 px-2 py-4 space-y-2 overflow-y-auto">
                 {{-- Dashboard --}}
-                <a href="{{ route('admin.dashboard') }}" class="flex items-center px-4 py-3 text-gray-100 bg-primary/10 border-l-4 border-primary rounded-r-md">
+                <a href="{{ route('admin.dashboard') }}" class="flex items-center px-4 py-3 {{ request()->routeIs('admin.dashboard') ? 'text-gray-100 bg-primary/10 border-l-4 border-primary rounded-r-md' : 'text-gray-400 hover:bg-gray-800 hover:text-white transition-colors rounded-md' }}">
                     <svg class="w-6 h-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                     </svg>
@@ -58,7 +58,7 @@
                 </a>
                 
                 {{-- Support Tickets --}}
-                <a href="{{ route('admin.tickets.index') }}" class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white transition-colors rounded-md">
+                <a href="{{ route('admin.tickets.index') }}" class="flex items-center px-4 py-3 {{ request()->routeIs('admin.tickets*') ? 'text-gray-100 bg-primary/10 border-l-4 border-primary rounded-r-md' : 'text-gray-400 hover:bg-gray-800 hover:text-white transition-colors rounded-md' }}">
                     <svg class="w-6 h-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
@@ -117,8 +117,11 @@
             <!-- Main Content -->
              <div class="flex-1 flex flex-col bg-gray-900 rounded-3xl mx-4 mb-4 shadow-2xl overflow-hidden">
             <!-- Page Title Area -->
-            <div class="h-16 flex items-center px-8 border-b border-gray-800">
+            <div class="h-16 flex items-center justify-between px-8 border-b border-gray-800">
              <h2 class="text-xl font-semibold text-gray-100">@yield('header')</h2>
+             <div class="flex items-center">
+                 @yield('header-actions')
+             </div>
             </div>
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-900 p-6">
                 @yield('content')

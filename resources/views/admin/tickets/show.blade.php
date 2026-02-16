@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 
 @section('header', 'Ticket #' . $ticket->id)
+@section('header-actions')
+    <a href="{{ route('admin.tickets.index') }}" class="text-gray-400 hover:text-white text-sm">
+        &larr; Back to Tickets
+    </a>
+@endsection
 
 @section('content')
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -153,11 +158,7 @@
             </form>
         </div>
         
-        <div class="text-center">
-             <a href="{{ route('admin.tickets.index') }}" class="text-gray-400 hover:text-white text-sm">
-                &larr; Back to Tickets
-            </a>
-        </div>
+
     </div>
 </div>
 @endsection
