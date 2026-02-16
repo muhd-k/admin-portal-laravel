@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Dispute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Exception;
 
 class DisputeController extends Controller
 {
@@ -41,23 +43,31 @@ class DisputeController extends Controller
      */
     public function resolve(Request $request, $id)
     {
-        $dispute = Dispute::findOrFail($id);
-        
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'winner_id' => 'required', // Could be claimant or respondent ID, or distinct value
             'resolution_notes' => 'required|string',
             'status' => 'required|in:resolved,closed',
         ]);
 
-        $dispute->update([
-            'status' => $request->status,
-            'resolution_notes' => $request->resolution_notes,
-            'resolved_by' => Auth::id(), // Assuming admin guard
-            'resolved_at' => now(),
-        ]);
-        
-        // Logic to award/refund would go here (omitted for now)
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->with('error', 'Validation failed: ' . $validator->errors()->first());
+        }
 
-        return back()->with('success', 'Dispute resolved successfully.');
+        try {
+            $dispute = Dispute::findOrFail($id);
+            
+            $dispute->update([
+                'status' => $request->status,
+                'resolution_notes' => $request->resolution_notes,
+                'resolved_by' => Auth::id(), // Assuming admin guard
+                'resolved_at' => now(),
+            ]);
+            
+            // Logic to award/refund would go here (omitted for now)
+
+            return back()->with('success', 'Dispute resolved successfully.');
+        } catch (Exception $e) {
+            return back()->with('error', 'Failed to resolve dispute: ' . $e->getMessage());
+        }
     }
 }
