@@ -7,6 +7,8 @@ use App\Http\Controllers\SupportTicketController;
 use App\Http\Controllers\DisputeController;
 use App\Http\Controllers\KycController;
 
+use App\Http\Controllers\OrderController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -41,6 +43,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/kyc/{id}', [KycController::class, 'show'])->name('kyc.show');
         Route::post('/kyc/{id}/approve', [KycController::class, 'approve'])->name('kyc.approve');
         Route::post('/kyc/{id}/reject', [KycController::class, 'reject'])->name('kyc.reject');
+        
+        // Orders
+        Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+        Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
         
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
     });

@@ -57,6 +57,14 @@
                     Dashboard
                 </a>
                 
+                {{-- Orders --}}
+                <a href="{{ route('admin.orders.index') }}" class="flex items-center px-4 py-3 {{ request()->routeIs('admin.orders*') ? 'text-gray-100 bg-primary/10 border-l-4 border-primary rounded-r-md' : 'text-gray-400 hover:bg-gray-800 hover:text-white transition-colors rounded-md' }}">
+                    <svg class="w-6 h-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                    Orders
+                </a>
+                
                 {{-- Support Tickets --}}
                 <a href="{{ route('admin.tickets.index') }}" class="flex items-center px-4 py-3 {{ request()->routeIs('admin.tickets*') ? 'text-gray-100 bg-primary/10 border-l-4 border-primary rounded-r-md' : 'text-gray-400 hover:bg-gray-800 hover:text-white transition-colors rounded-md' }}">
                     <svg class="w-6 h-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
