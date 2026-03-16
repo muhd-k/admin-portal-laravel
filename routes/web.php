@@ -8,6 +8,7 @@ use App\Http\Controllers\DisputeController;
 use App\Http\Controllers\KycController;
 
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\MerchantController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -47,6 +48,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Orders
         Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
         Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+        
+        // Merchants
+        Route::get('/merchants', [MerchantController::class, 'index'])->name('merchants.index');
+        Route::get('/merchants/{id}', [MerchantController::class, 'show'])->name('merchants.show');
         
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
     });
